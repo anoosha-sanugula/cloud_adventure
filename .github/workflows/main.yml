@@ -1,0 +1,21 @@
+name: Cloud_Adventure React
+run-name: Cloud_Adventure Frontend
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  Workflow-for-cloudAdventure-Frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test
+      - name: Build the React app
+        run: npm run build
