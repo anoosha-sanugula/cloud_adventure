@@ -3,7 +3,7 @@ run-name: Cloud_Adventure Frontend
 on:
   push:
     branches:
-      - main
+      - cloud-adventure-version-1
   pull_request:
     branches:
       - main
