@@ -11,11 +11,15 @@ const Register = () => {
     reset,
     formState: { errors },
   } = useForm<User>();
-  const registerUser=()=>{
-
-  }
-  return(
+  const registerUser = () => {};
+  return (
     <div className="register-container">
+      <video width={800} height={500} controls loop autoPlay muted>
+        <source
+          src="https://d2jl5m2ggtod4p.cloudfront.net/demo_video.mp4"
+          type="video/mp4"
+        />
+      </video>
       <form onSubmit={handleSubmit(registerUser)}>
         <h3>Register Here!</h3>
         <div className="form-control">
@@ -77,7 +81,9 @@ const Register = () => {
           <input {...register("profile_image")} type="file" />
         </div>
         <div className="form-control">
-          <button className="register" type="submit">Register</button>
+          <button className="register" type="submit">
+            Register
+          </button>
         </div>
         <div>
           <span className="login-text">Already have an account?</span>
@@ -91,4 +97,3 @@ const Register = () => {
 };
 
 export default Register;
-
