@@ -1,4 +1,3 @@
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { User } from "./User.type";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,12 +10,53 @@ const Register = () => {
     reset,
     formState: { errors },
   } = useForm<User>();
-  const registerUser = () => {};
+  const navigate = useNavigate();
+  const registerUser: SubmitHandler<User> = async (user: any) => {
+    const formData = new FormData();
+    formData.append("firstname", user.firstname);
+    formData.append("lastname", user.lastname);
+    formData.append("password", user.password);
+
+    if (user.profile_image && user.profile_image[0]) {
+      formData.append("profile_image", user.profile_image[0]);
+    } else {
+      console.log("No profile image uploaded or file input is missing.");
+    }
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API}/users`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const userdata = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("userdata", JSON.stringify(user));
+
+        const token = userdata.accessToken;
+        if (token) {
+          localStorage.setItem("accessToken", token);
+        }
+        navigate("/home", { replace: true });
+      } else {
+        alert(userdata.message);
+      }
+    } catch (error) {
+      console.error("Error occurred during form submission:", error);
+      alert("There was an error while submitting the form.");
+    } finally {
+      reset();
+    }
+  };
+
   return (
     <div className="register-container">
       <video width={800} height={500} controls loop autoPlay muted>
         <source
-          src="https://d2jl5m2ggtod4p.cloudfront.net/demo_video.mp4"
+          src="https://den3dh5dcjk1i.cloudfront.net/demo_video.mp4"
           type="video/mp4"
         />
       </video>
